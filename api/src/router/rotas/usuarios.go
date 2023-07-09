@@ -1,48 +1,41 @@
 package rotas
 
-import "net/http"
+import (
+	"api/src/controller"
+	"net/http"
+)
 
 const rotaUsuarioId = "/usuarios/{id}"
 
 var rotasUsuarios = []Rota{
 	{
-		URI:    "/usuarios",
-		Metodo: http.MethodPost,
-		Funcao: func(writer http.ResponseWriter, request *http.Request) {
-
-		},
+		URI:         "/usuarios",
+		Metodo:      http.MethodPost,
+		Funcao:      controller.Criar,
 		Autenticado: false,
 	},
 	{
-		URI:    "/usuarios",
-		Metodo: http.MethodGet,
-		Funcao: func(writer http.ResponseWriter, request *http.Request) {
-
-		},
+		URI:         "/usuarios",
+		Metodo:      http.MethodGet,
+		Funcao:      controller.BuscarTodos,
 		Autenticado: false,
 	},
 	{
-		URI:    rotaUsuarioId,
-		Metodo: http.MethodGet,
-		Funcao: func(writer http.ResponseWriter, request *http.Request) {
-
-		},
+		URI:         rotaUsuarioId,
+		Metodo:      http.MethodGet,
+		Funcao:      controller.BuscarPorId,
 		Autenticado: false,
 	},
 	{
-		URI:    rotaUsuarioId,
-		Metodo: http.MethodPut,
-		Funcao: func(writer http.ResponseWriter, request *http.Request) {
-
-		},
+		URI:         rotaUsuarioId,
+		Metodo:      http.MethodPut,
+		Funcao:      controller.Atualizar,
 		Autenticado: false,
 	},
 	{
-		URI:    rotaUsuarioId,
-		Metodo: http.MethodDelete,
-		Funcao: func(writer http.ResponseWriter, request *http.Request) {
-
-		},
+		URI:         rotaUsuarioId,
+		Metodo:      http.MethodDelete,
+		Funcao:      controller.Deletar,
 		Autenticado: false,
 	},
 }
