@@ -27,10 +27,10 @@
   <br/>
     <div>
       <h1>Open Source</h1>
-      <sub>Copyright © 2023 - <a href="https://github.com/iuricode">iuricode</sub></a>
+      <sub>Copyright © 2023 - likwi</sub>
     </div>
     <br/>
-    💖
+    💻
 </div>
 
 
