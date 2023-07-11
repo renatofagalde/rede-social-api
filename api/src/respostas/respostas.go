@@ -1,16 +1,18 @@
 package respostas
 
 import (
+	"api/src/config"
 	"encoding/json"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 // JSON -> retora um resposta em JSON
 func JSON(writer http.ResponseWriter, statusCode int, dados interface{}) {
-	writer.WriteHeader(statusCode)
-	writer.Header().Set("versao", "01")
+	writer.Header().Set("versao", strconv.Itoa(config.VersaoAPI))
 	writer.Header().Set("Content-Type", "application/json")
+	writer.WriteHeader(statusCode)
 	if erro := json.NewEncoder(writer).Encode(dados); erro != nil {
 		log.Fatal(erro)
 	}
