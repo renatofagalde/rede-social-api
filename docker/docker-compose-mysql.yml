@@ -1,0 +1,15 @@
+version: "3.5"
+services:
+  database_master:
+    image: mysql:8.0.30
+    container_name: "redesocial"
+    restart: always
+    volumes:
+      - ./../sql/script01.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 3301:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=redesocial
+      - MYSQL_USER=app
+      - MYSQL_PASSWORD=appredesocial

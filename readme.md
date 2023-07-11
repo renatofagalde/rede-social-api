@@ -39,3 +39,4 @@ Aqui estão todos os comandos feitos para a criacao deste projeto.
 
 - Criação do módulo: ``go mod init api``
 - Biblioteca mux para roteamento: ``go get github.com/gorilla/mux``
+- Subir banco de dados: ``docker-compose -f docker-compose-mysql-only.yml up -d``
