@@ -16,5 +16,11 @@ func BuscarTodos(write http.ResponseWriter, request *http.Request) {
 	}
 	defer db.Close()
 	respositorio := repositorio.NovoRepositorioUsuario(db)
-	usuarios, erro := respositorio.Buscar(nomeOuNick)
+	usuarios, erro := respositorio.BuscarPorNomeOuNick(nomeOuNick)
+	if erro != nil {
+		respostas.ERRO(write, http.StatusInternalServerError, erro)
+	}
+
+	respostas.JSON(write, http.StatusOK, usuarios)
+
 }
