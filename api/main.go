@@ -11,8 +11,8 @@ import (
 func main() {
 
 	config.Carregar()
-	fmt.Sprintf("URL banco de dados = %s", config.StringURLBanco)
-	fmt.Sprintf("Porta da aplicacao = %s", config.Porta)
+	fmt.Println(fmt.Sprintf("URL banco de dados = %s", config.StringURLBanco))
+	fmt.Println(fmt.Sprintf("Porta da aplicacao = %d", config.Porta))
 
 	fmt.Println("Rodando api")
 
