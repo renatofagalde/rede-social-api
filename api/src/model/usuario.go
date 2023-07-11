@@ -17,7 +17,7 @@ type Usuario struct {
 }
 
 // validar propriedades se estão preenchidas
-func (usuario *Usuario) validar() error {
+func (usuario *Usuario) validar(etapa string) error {
 	if usuario.Nome == "" {
 		return errors.New("O nome é obrigatório")
 	}
@@ -26,7 +26,7 @@ func (usuario *Usuario) validar() error {
 		return errors.New("Email é obrigatório")
 	}
 
-	if usuario.Senha == "" {
+	if etapa == "cadastro" && usuario.Senha == "" {
 		return errors.New("Senha é obrigatório")
 	}
 	return nil
@@ -40,11 +40,10 @@ func (usuario *Usuario) formatar() {
 }
 
 // ira chamar os metodos de formatar e checagem
-func (usuario *Usuario) Preparar() error {
-	if erro := usuario.validar(); erro != nil {
+func (usuario *Usuario) Preparar(etapa string) error {
+	if erro := usuario.validar(etapa); erro != nil {
 		return erro
 	}
-
 	usuario.formatar()
 	return nil
 }

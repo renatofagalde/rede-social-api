@@ -13,9 +13,14 @@ func JSON(writer http.ResponseWriter, statusCode int, dados interface{}) {
 	writer.Header().Set("versao", strconv.Itoa(config.VersaoAPI))
 	writer.Header().Set("Content-Type", "application/json")
 	writer.WriteHeader(statusCode)
-	if erro := json.NewEncoder(writer).Encode(dados); erro != nil {
-		log.Fatal(erro)
+
+	//tratar quando o tipo da resposta é 204
+	if dados != nil {
+		if erro := json.NewEncoder(writer).Encode(dados); erro != nil {
+			log.Fatal(erro)
+		}
 	}
+
 }
 
 // retorna um erro em JSON
