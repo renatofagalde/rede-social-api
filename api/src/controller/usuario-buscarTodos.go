@@ -1,7 +1,20 @@
 package controller
 
-import "net/http"
+import (
+	"api/src/banco"
+	"api/src/repositorio"
+	"api/src/respostas"
+	"net/http"
+	"strings"
+)
 
 func BuscarTodos(write http.ResponseWriter, request *http.Request) {
-	write.Write([]byte("buscar todos"))
+	nomeOuNick := strings.ToLower(request.URL.Query().Get("usuario"))
+	db, erro := banco.Conectar()
+	if erro != nil {
+		respostas.ERRO(write, http.StatusInternalServerError, erro)
+	}
+	defer db.Close()
+	respositorio := repositorio.NovoRepositorioUsuario(db)
+	usuarios, erro := respositorio.Buscar(nomeOuNick)
 }
