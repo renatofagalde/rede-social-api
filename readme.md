@@ -41,5 +41,6 @@ Aqui estão todos os comandos feitos para a criacao deste projeto.
 - Biblioteca mux para roteamento: ``go get github.com/gorilla/mux``
 - Subir banco de dados: ``docker-compose -f docker-compose-mysql-only.yml up -d``
 - Variáveis de ambiente: ``go get github.com/joho/godotenv``
-- Driver mysql:``go get github.com/go-sql-driver/mysql``
+- Driver mysql: ``go get github.com/go-sql-driver/mysql``
 - Validação de email: ``go get github.com/badoux/checkmail``
+- BCrypt: ``go get golang.org/x/crypto/bcrypt``
