@@ -5,37 +5,45 @@ import (
 	"api/src/model"
 	"api/src/repositorio"
 	_ "api/src/repositorio"
+	"api/src/respostas"
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 )
 
 func Criar(writer http.ResponseWriter, request *http.Request) {
 	payload, erro := io.ReadAll(request.Body)
 	if erro != nil {
-		log.Fatal(erro)
+		respostas.ERRO(writer, http.StatusUnprocessableEntity, erro)
+		return
 	}
 
 	var usuario model.Usuario
 	if erro = json.Unmarshal(payload, &usuario); erro != nil {
-		log.Fatal(erro)
+		respostas.ERRO(writer, http.StatusBadRequest, erro)
+		return
+
+	}
+	if erro = usuario.Preparar(); erro != nil {
+		respostas.ERRO(writer, http.StatusBadRequest, erro)
+		return
 	}
 	fmt.Println(usuario)
 
 	db, erro := banco.Conectar()
 	if erro != nil {
-		log.Fatal(erro)
+		respostas.ERRO(writer, http.StatusInternalServerError, erro)
+		return
 	}
 	defer db.Close()
 
 	repositorio := repositorio.NovoRepositorioUsuario(db)
-	ID, erro := repositorio.Criar(usuario)
+	usuario.ID, erro = repositorio.Criar(usuario)
 	if erro != nil {
-		log.Fatal(erro)
+		respostas.ERRO(writer, http.StatusInternalServerError, erro)
+		return
 	}
 
-	writer.Write([]byte(fmt.Sprintf("ID inserido é: %d", ID)))
-
+	respostas.JSON(writer, http.StatusCreated, usuario)
 }
