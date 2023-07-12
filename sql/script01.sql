@@ -8,7 +8,7 @@ create table usuarios
     nome      varchar(50) not null,
     nick      varchar(50) not null unique,
     email     varchar(50) not null unique,
-    senha     varchar(50) not null,
+    senha     varchar(150) not null,
     criado_em timestamp default current_timestamp()
 ) engine = innodb character set utf8 collate utf8_unicode_ci;;
 
