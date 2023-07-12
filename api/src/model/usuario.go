@@ -59,6 +59,8 @@ func (usuario *Usuario) Preparar(etapa string) error {
 	if erro := usuario.validar(etapa); erro != nil {
 		return erro
 	}
-	usuario.formatar(etapa)
+	if erro := usuario.formatar(etapa); erro != nil {
+		return erro
+	}
 	return nil
 }
