@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"api/src/autenticacao"
 	"api/src/banco"
 	"api/src/model"
 	"api/src/repositorio"
@@ -43,5 +44,7 @@ func Login(write http.ResponseWriter, request *http.Request) {
 	if erro = seguranca.VerificarSenha(usuarioSalvo.Senha, usuario.Senha); erro != nil {
 		respostas.ERRO(write, http.StatusUnauthorized, erro)
 	}
-	respostas.JSON(write, http.StatusCreated, "autenticado")
+
+	token, _ := autenticacao.CriarToken(usuario.ID)
+	respostas.JSON(write, http.StatusCreated, []byte(token))
 }
