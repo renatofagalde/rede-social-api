@@ -16,6 +16,9 @@ var (
 
 	//versão da API
 	VersaoAPI = 0
+
+	//chave assinada para assinar o token
+	SecretKey []byte
 )
 
 // Carregar irá inicializar as variáveis de ambiente
@@ -38,4 +41,6 @@ func Carregar() {
 		os.Getenv("DB_HOST"),
 		os.Getenv("DB_PORT"),
 		os.Getenv("DB_DATABASE"))
+
+	SecretKey = []byte(os.Getenv("SECRET_KEY"))
 }
