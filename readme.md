@@ -44,3 +44,4 @@ Aqui estão todos os comandos feitos para a criacao deste projeto.
 - Driver mysql: ``go get github.com/go-sql-driver/mysql``
 - Validação de email: ``go get github.com/badoux/checkmail``
 - BCrypt: ``go get golang.org/x/crypto/bcrypt``
+- JWT: ``go get github.com/dgrijalva/jwt-go``
