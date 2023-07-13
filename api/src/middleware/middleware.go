@@ -12,13 +12,20 @@ import (
 func Logger(next http.HandlerFunc) http.HandlerFunc {
 	return func(writer http.ResponseWriter, request *http.Request) {
 
+		var headers string
+
+		for k, v := range request.Header {
+			h := fmt.Sprintf("%v: %v\n", k, v)
+			headers += h
+		}
+
 		payload, erro := io.ReadAll(request.Body)
 		if erro != nil {
 			respostas.ERRO(writer, http.StatusUnprocessableEntity, erro)
 			return
 		}
-		log.Printf("\n\n********* INICIO\nMethod: %s, URI: %s, host: %s, payload:\n%s\n********* FIM",
-			request.Method, request.RequestURI, request.Host, payload)
+		log.Printf("\n\n********* INICIO\nmethod: %s, URI: %s, host: %s,\nheaders:\n%s=========\npayload:\n%s\n********* FIM",
+			request.Method, request.RequestURI, request.Host, headers, payload)
 
 		next(writer, request)
 	}
