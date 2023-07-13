@@ -1,7 +1,8 @@
 package middleware
 
 import (
-	"fmt"
+	"api/src/respostas"
+	"io"
 	"log"
 	"net/http"
 )
@@ -9,15 +10,22 @@ import (
 // Logger escreve logs
 func Logger(next http.HandlerFunc) http.HandlerFunc {
 	return func(writer http.ResponseWriter, request *http.Request) {
-		log.Printf("\n********* INICIo\nMethod: %s, URI: %s, HOST: %s\n*********",
-			request.Method, request.RequestURI, request.Host)
+
+		payload, erro := io.ReadAll(request.Body)
+		if erro != nil {
+			respostas.ERRO(writer, http.StatusUnprocessableEntity, erro)
+			return
+		}
+		log.Printf("\n\n********* INICIO\nMethod: %s, URI: %s, host: %s, payload:\n%s\n********* FIM",
+			request.Method, request.RequestURI, request.Host, payload)
 	}
 }
 
-// autenticar
+// autenticar um usuario
 func Autenticar(next http.HandlerFunc) http.HandlerFunc {
 	return func(writer http.ResponseWriter, request *http.Request) {
-		fmt.Println("validando o token")
-		next(writer, request) //next -> chamar a execução que veio no parametro que veio do if da rota quando autenticado for true
+
+		log.Printf("\n\n********* mamae")
+		next(writer, request)
 	}
 }
