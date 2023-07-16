@@ -52,6 +52,5 @@ func Login(write http.ResponseWriter, request *http.Request) {
 		respostas.ERRO(write, http.StatusInternalServerError, erro)
 		return
 	}
-
-	respostas.JSON(write, http.StatusCreated, []byte(token))
+	write.Write([]byte(token))
 }

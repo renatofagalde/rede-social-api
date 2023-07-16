@@ -9,6 +9,7 @@ import (
 // verifica se o token passado na requisição é válido
 func ValidarToken(request *http.Request) error {
 	tokenString := extrairToken(request)
+
 	token, erro := jwt.Parse(tokenString, retornarChaveVerificacao)
 	if erro != nil {
 		return erro

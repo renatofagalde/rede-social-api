@@ -10,6 +10,7 @@ import (
 // isso está na documentação doGO
 func retornarChaveVerificacao(token *jwt.Token) (interface{}, error) {
 	if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+		fmt.Sprintf("Erro ao validar algoritmo: %s", token.Header["alg"])
 		return nil, fmt.Errorf("método de assinatura inesperado! %v", token.Header["alg"])
 	}
 	return config.SecretKey, nil
