@@ -44,6 +44,7 @@ func Login(write http.ResponseWriter, request *http.Request) {
 	//valida se a senha possui o mesmo valor
 	if erro = seguranca.VerificarSenha(usuarioSalvo.Senha, usuario.Senha); erro != nil {
 		respostas.ERRO(write, http.StatusUnauthorized, erro)
+		return
 	}
 
 	token, erro := autenticacao.CriarToken(usuario.ID)
