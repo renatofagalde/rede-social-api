@@ -21,9 +21,7 @@ func ExtrairUsuarioID(request *http.Request) (uint64, error) {
 		if erro != nil {
 			return 0, erro
 		}
-
 		return id, nil
 	}
-
-	return 0, errors.New("Token inválido")
+	return 0, errors.New("token inválido")
 }

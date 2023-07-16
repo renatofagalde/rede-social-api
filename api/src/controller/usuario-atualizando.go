@@ -1,11 +1,13 @@
 package controller
 
 import (
+	"api/src/autenticacao"
 	"api/src/banco"
 	"api/src/model"
 	"api/src/repositorio"
 	"api/src/respostas"
 	"encoding/json"
+	"errors"
 	"github.com/gorilla/mux"
 	"io"
 	"net/http"
@@ -19,6 +21,16 @@ func Atualizar(write http.ResponseWriter, request *http.Request) {
 	ID, erro := strconv.ParseUint(parametros["id"], 10, 64)
 	if erro != nil {
 		respostas.ERRO(write, http.StatusBadRequest, erro, http.StatusBadRequest)
+		return
+	}
+	usuarioIdToken, erro := autenticacao.ExtrairUsuarioID(request)
+	if erro != nil {
+		respostas.ERRO(write, http.StatusUnauthorized, erro, http.StatusUnauthorized)
+		return
+	}
+
+	if ID != usuarioIdToken {
+		respostas.ERRO(write, http.StatusForbidden, errors.New("sem permissão"), http.StatusForbidden)
 		return
 	}
 

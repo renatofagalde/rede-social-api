@@ -47,7 +47,7 @@ func Login(write http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	token, erro := autenticacao.CriarToken(usuario.ID)
+	token, erro := autenticacao.CriarToken(usuarioSalvo.ID)
 	if erro != nil {
 		respostas.ERRO(write, http.StatusInternalServerError, erro, http.StatusInternalServerError)
 		return
