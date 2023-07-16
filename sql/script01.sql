@@ -13,7 +13,7 @@ create table usuarios
 ) engine = innodb character set utf8 collate utf8_unicode_ci;;
 
 insert into usuarios (nome, nick, email, senha)
-    value ("Ronaldo Naz√°rio", "Fenomeno", "fenomeno@teste.com", 1),
-    ("Ayrton Senna da Silva", "Senna", "senna@teste.com", 1),
-    ("Rom√°rio", "Baixinho", "baixinho@teste.com", 1),
-    ("Zico", "Zico", "zico@teste.com", 1);
+    value ("Ronaldo Naz·rio", "Fenomeno", "fenomeno@teste.com", '$2a$12$S7wbqJTXtgp6kyEkrVTiGOr.fbeLX0ShD2J9ftMr3DMRiJyY.VNTS'),
+    ("Ayrton Senna da Silva", "Senna", "senna@teste.com", '$2a$12$S7wbqJTXtgp6kyEkrVTiGOr.fbeLX0ShD2J9ftMr3DMRiJyY.VNTS'),
+    ("Rom·rio", "Baixinho", "baixinho@teste.com", '$2a$12$S7wbqJTXtgp6kyEkrVTiGOr.fbeLX0ShD2J9ftMr3DMRiJyY.VNTS'),
+    ("Zico", "Zico", "zico@teste.com", '$2a$12$S7wbqJTXtgp6kyEkrVTiGOr.fbeLX0ShD2J9ftMr3DMRiJyY.VNTS');
