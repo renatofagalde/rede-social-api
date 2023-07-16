@@ -3,6 +3,7 @@ package middleware
 import (
 	"api/src/autenticacao"
 	"api/src/respostas"
+	"api/src/tool"
 	"fmt"
 	"io"
 	"log"
@@ -20,13 +21,18 @@ func Logger(next http.HandlerFunc) http.HandlerFunc {
 			headers += h
 		}
 
-		payload, erro := io.ReadAll(request.Body)
-		if erro != nil {
-			respostas.ERRO(writer, http.StatusUnprocessableEntity, erro)
-			return
-		}
-		log.Printf("\n\n********* INICIO\nmethod: %s, URI: %s, host: %s,\nheaders:\n%s=========\npayload:\n%s\n********* FIM",
-			request.Method, request.RequestURI, request.Host, headers, payload)
+		payload := io.NopCloser(tool.ReusableReader(request.Body))
+		request.Body = payload
+
+		payloadLog, _ := io.ReadAll(payload)
+
+		log.Printf("\n\n********* INICIO\nhost: %s, "+
+			"URI: %s, "+
+			"method: %s,"+
+			"\nheaders:\n%s=========\n"+
+			"payloadLog:\n"+
+			"%s\n********* FIM",
+			request.Host, request.RequestURI, request.Method, headers, payloadLog)
 
 		next(writer, request)
 	}

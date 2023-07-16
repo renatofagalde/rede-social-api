@@ -20,7 +20,8 @@ func Criar(write http.ResponseWriter, request *http.Request) {
 	}
 
 	var usuario model.Usuario
-	if erro = json.Unmarshal(payload, &usuario); erro != nil {
+	fmt.Println(fmt.Sprintf("usuario: %s", payload))
+	if erro := json.Unmarshal(payload, &usuario); erro != nil {
 		respostas.ERRO(write, http.StatusBadRequest, erro)
 		return
 
@@ -29,8 +30,6 @@ func Criar(write http.ResponseWriter, request *http.Request) {
 		respostas.ERRO(write, http.StatusBadRequest, erro)
 		return
 	}
-	fmt.Println(usuario)
-
 	db, erro := banco.Conectar()
 	if erro != nil {
 		respostas.ERRO(write, http.StatusInternalServerError, erro)
