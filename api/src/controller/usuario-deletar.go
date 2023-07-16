@@ -18,6 +18,11 @@ func Deletar(write http.ResponseWriter, request *http.Request) {
 		return
 	}
 
+	//validar usuario do token
+	if validarUsuario(write, request, erro, ID) {
+		return
+	}
+
 	db, erro := banco.Conectar()
 	if erro != nil {
 		respostas.ERRO(write, http.StatusInternalServerError, erro, http.StatusInternalServerError)

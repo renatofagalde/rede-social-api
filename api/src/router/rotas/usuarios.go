@@ -21,6 +21,12 @@ var rotasUsuarios = []Rota{
 		Autenticado: true,
 	},
 	{
+		URI:         "/usuarios/me",
+		Metodo:      http.MethodGet,
+		Funcao:      controller.BuscarLogado,
+		Autenticado: true,
+	},
+	{
 		URI:         rotaUsuarioId,
 		Metodo:      http.MethodGet,
 		Funcao:      controller.BuscarPorId,

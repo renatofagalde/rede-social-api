@@ -1,13 +1,11 @@
 package controller
 
 import (
-	"api/src/autenticacao"
 	"api/src/banco"
 	"api/src/model"
 	"api/src/repositorio"
 	"api/src/respostas"
 	"encoding/json"
-	"errors"
 	"github.com/gorilla/mux"
 	"io"
 	"net/http"
@@ -23,17 +21,11 @@ func Atualizar(write http.ResponseWriter, request *http.Request) {
 		respostas.ERRO(write, http.StatusBadRequest, erro, http.StatusBadRequest)
 		return
 	}
-	usuarioIdToken, erro := autenticacao.ExtrairUsuarioID(request)
-	if erro != nil {
-		respostas.ERRO(write, http.StatusUnauthorized, erro, http.StatusUnauthorized)
+
+	//validar usuario do token
+	if validarUsuario(write, request, erro, ID) {
 		return
 	}
-
-	if ID != usuarioIdToken {
-		respostas.ERRO(write, http.StatusForbidden, errors.New("sem permissão"), http.StatusForbidden)
-		return
-	}
-
 	payload, erro := io.ReadAll(request.Body)
 	if erro != nil {
 		respostas.ERRO(write, http.StatusUnprocessableEntity, erro, http.StatusUnprocessableEntity)
