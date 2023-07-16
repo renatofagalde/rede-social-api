@@ -3,10 +3,8 @@ package main
 import (
 	"api/src/config"
 	"api/src/router"
-	"encoding/base64"
 	"fmt"
 	"log"
-	"math/rand"
 	"net/http"
 )
 

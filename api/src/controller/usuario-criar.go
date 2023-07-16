@@ -15,25 +15,24 @@ import (
 func Criar(write http.ResponseWriter, request *http.Request) {
 	payload, erro := io.ReadAll(request.Body)
 	if erro != nil {
-		respostas.ERRO(write, http.StatusUnprocessableEntity, erro)
+		respostas.ERRO(write, http.StatusUnprocessableEntity, erro, http.StatusUnprocessableEntity)
 		return
 	}
 
 	var usuario model.Usuario
-	if erro = json.Unmarshal(payload, &usuario); erro != nil {
-		respostas.ERRO(write, http.StatusBadRequest, erro)
+	fmt.Println(fmt.Sprintf("usuario: %s", payload))
+	if erro := json.Unmarshal(payload, &usuario); erro != nil {
+		respostas.ERRO(write, http.StatusBadRequest, erro, http.StatusBadRequest)
 		return
 
 	}
 	if erro = usuario.Preparar("cadastro"); erro != nil {
-		respostas.ERRO(write, http.StatusBadRequest, erro)
+		respostas.ERRO(write, http.StatusBadRequest, erro, http.StatusBadRequest)
 		return
 	}
-	fmt.Println(usuario)
-
 	db, erro := banco.Conectar()
 	if erro != nil {
-		respostas.ERRO(write, http.StatusInternalServerError, erro)
+		respostas.ERRO(write, http.StatusInternalServerError, erro, http.StatusInternalServerError)
 		return
 	}
 	defer db.Close()
@@ -41,7 +40,7 @@ func Criar(write http.ResponseWriter, request *http.Request) {
 	repositorio := repositorio.NovoRepositorioUsuario(db)
 	usuario.ID, erro = repositorio.Criar(usuario)
 	if erro != nil {
-		respostas.ERRO(write, http.StatusInternalServerError, erro)
+		respostas.ERRO(write, http.StatusInternalServerError, erro, http.StatusInternalServerError)
 		return
 	}
 

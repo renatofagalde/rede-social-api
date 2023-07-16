@@ -14,20 +14,24 @@ func Deletar(write http.ResponseWriter, request *http.Request) {
 
 	ID, erro := strconv.ParseUint(parametros["id"], 10, 64)
 	if erro != nil {
-		respostas.ERRO(write, http.StatusBadRequest, erro)
+		respostas.ERRO(write, http.StatusBadRequest, erro, http.StatusBadRequest)
+		return
+	}
+
+	//validar usuario do token
+	if validarUsuario(write, request, erro, ID) {
 		return
 	}
 
 	db, erro := banco.Conectar()
 	if erro != nil {
-		respostas.ERRO(write, http.StatusInternalServerError, erro)
+		respostas.ERRO(write, http.StatusInternalServerError, erro, http.StatusInternalServerError)
 	}
 	defer db.Close()
 
 	respositorio := repositorio.NovoRepositorioUsuario(db)
 	if erro = respositorio.DeletarPorId(ID); erro != nil {
-		respostas.ERRO(write, http.StatusInternalServerError, erro)
+		respostas.ERRO(write, http.StatusInternalServerError, erro, http.StatusInternalServerError)
 	}
-
 	respostas.JSON(write, http.StatusNoContent, nil)
 }

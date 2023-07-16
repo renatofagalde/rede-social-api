@@ -1,24 +1,20 @@
 package controller
 
 import (
+	"api/src/autenticacao"
 	"api/src/banco"
 	"api/src/repositorio"
 	"api/src/respostas"
-	"github.com/gorilla/mux"
 	"net/http"
-	"strconv"
 )
 
 // buscando um usuario por id
-func BuscarPorId(write http.ResponseWriter, request *http.Request) {
-	parametros := mux.Vars(request)
+func BuscarLogado(write http.ResponseWriter, request *http.Request) {
 
-	ID, erro := strconv.ParseUint(parametros["id"], 10, 64)
+	ID, erro := autenticacao.ExtrairUsuarioID(request)
 	if erro != nil {
-		respostas.ERRO(write, http.StatusBadRequest, erro, http.StatusBadRequest)
-		return
+		respostas.ERRO(write, http.StatusUnauthorized, erro, http.StatusUnauthorized)
 	}
-
 	db, erro := banco.Conectar()
 	if erro != nil {
 		respostas.ERRO(write, http.StatusInternalServerError, erro, http.StatusInternalServerError)

@@ -2,17 +2,17 @@ package autenticacao
 
 import (
 	"api/src/config"
-	jwt "github.com/dgrijalva/jwt-go"
 	"time"
+
+	jwt "github.com/dgrijalva/jwt-go"
 )
 
-// criar token
+// CriarToken retorna um token assinado com as permissões do usuário
 func CriarToken(id uint64) (string, error) {
-
-	permissoes := jwt.MapClaims{} //reivindicações
+	permissoes := jwt.MapClaims{}
 	permissoes["authorized"] = true
-	permissoes["exp"] = time.Now().Add(time.Hour * 6).Unix()
+	permissoes["exp"] = time.Now().Add(time.Hour * 8).Unix()
 	permissoes["id"] = id
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, permissoes) //passando o método de aasinatura
-	return token.SignedString(config.SecretKey)                    //secret
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, permissoes)
+	return token.SignedString([]byte(config.SecretKey))
 }
