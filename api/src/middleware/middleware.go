@@ -43,12 +43,12 @@ func Logger(next http.HandlerFunc) http.HandlerFunc {
 func Autenticar(next http.HandlerFunc) http.HandlerFunc {
 	return func(writer http.ResponseWriter, request *http.Request) {
 		if len(request.Header["Trace-Id"]) == 0 {
-			respostas.ERRO(writer, http.StatusBadRequest, errors.New("cabeçalho \"Trace-Id\" é obrigatório"))
+			respostas.ERRO(writer, http.StatusBadRequest, errors.New("cabeçalho 'Trace-Id' é obrigatório"), http.StatusBadRequest)
 			return
 		}
 		if erro := autenticacao.ValidarToken(request); erro != nil {
 			fmt.Println(fmt.Sprintf("requisição NEGADA %v", request.Header["Trace-Id"]))
-			respostas.ERRO(writer, http.StatusUnauthorized, erro)
+			respostas.ERRO(writer, http.StatusUnauthorized, erro, http.StatusUnauthorized)
 			return
 		}
 		fmt.Println("requisição liberada")

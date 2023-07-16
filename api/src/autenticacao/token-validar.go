@@ -1,6 +1,7 @@
 package autenticacao
 
 import (
+	"errors"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"net/http"
@@ -14,6 +15,11 @@ func ValidarToken(request *http.Request) error {
 	if erro != nil {
 		return erro
 	}
+
+	if _, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		return nil
+	}
+
 	fmt.Println(token)
-	return nil
+	return errors.New("token inválido")
 }

@@ -10,7 +10,7 @@ import (
 
 // JSON -> retora um resposta em JSON
 func JSON(writer http.ResponseWriter, statusCode int, dados interface{}) {
-	writer.Header().Set("versao", strconv.Itoa(config.VersaoAPI))
+	writer.Header().Set("Versao", strconv.Itoa(config.VersaoAPI))
 	writer.Header().Set("Content-Type", "application/json")
 	writer.WriteHeader(statusCode)
 
@@ -24,10 +24,12 @@ func JSON(writer http.ResponseWriter, statusCode int, dados interface{}) {
 }
 
 // retorna um erro em JSON
-func ERRO(writer http.ResponseWriter, statusCode int, erro error) {
+func ERRO(writer http.ResponseWriter, statusCode int, erro error, codigo int) {
 	JSON(writer, statusCode, struct {
-		Erro string `json:"erro"`
+		Erro   string `json:"erro"`
+		Codigo int    `json:"codigo"`
 	}{
-		Erro: erro.Error(),
+		Erro:   erro.Error(),
+		Codigo: codigo,
 	})
 }
