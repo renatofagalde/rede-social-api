@@ -6,6 +6,7 @@ import (
 )
 
 const rotaUsuarioId = "/usuarios/{id}"
+const seguir = "/usuarios/{id}/seguir"
 
 var rotasUsuarios = []Rota{
 	{
@@ -42,6 +43,12 @@ var rotasUsuarios = []Rota{
 		URI:         rotaUsuarioId,
 		Metodo:      http.MethodDelete,
 		Funcao:      controller.Deletar,
+		Autenticado: false,
+	},
+	{
+		URI:         seguir,
+		Metodo:      http.MethodPost,
+		Funcao:      controller.SeguirUsuario,
 		Autenticado: false,
 	},
 }
