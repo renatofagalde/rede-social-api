@@ -1,0 +1,310 @@
+{
+	"info": {
+		"_postman_id": "b7d57636-72f4-4d2e-b334-5fdc1fb40561",
+		"name": "usuairo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13201941",
+		"_collection_link": "https://www.postman.com/galactic-space-905414/workspace/go-lang/collection/13201941-b7d57636-72f4-4d2e-b334-5fdc1fb40561?action=share&creator=13201941&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "criar usuario",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\":\"usuario03\",\r\n    \"email\":\"usuario03@gmail.com\",\r\n    \"nick\":\"usuario03\",\r\n    \"senha\":\"usuario03\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/usuarios",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//console.log(pm.response.json())\r",
+							"\r",
+							"var request = JSON.parse(pm.request.body.raw)\r",
+							"var token = pm.response.json().accessToken\r",
+							"pm.environment.set('token', token)\r",
+							"pm.environment.set('email', request.email)\r",
+							"\r",
+							"console.log(`Criado token para usuário: ${request.email}, token: ${token}`)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"fenomeno@teste.com\",    \r\n    \"senha\":\"teste\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "atualizar usuario",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\":\"usuario03x02\",\r\n    \"nick\": \"usuario03x02\",\r\n    \"email\":\"usuario0321@email.com\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/usuarios/13",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"usuarios",
+						"13"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete usuario",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\":\"joao\",\r\n    \"email\":\"teste@email.com\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/usuarios/13",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"usuarios",
+						"13"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buscar usuários",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2ODk1MjQwOTcsImlkIjowfQ.eA6JVfpvqBIKr5--ZFNVgyvTf4lRGQON21KUpzAjBk8",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "trace-id",
+						"value": "{{$guid}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/usuarios",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buscar usuário logado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2ODk1MjQwOTcsImlkIjowfQ.eA6JVfpvqBIKr5--ZFNVgyvTf4lRGQON21KUpzAjBk8",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "trace-id",
+						"value": "{{$guid}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/usuarios/me",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"usuarios",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buscar usuário por id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/usuarios/2",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"usuarios",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
